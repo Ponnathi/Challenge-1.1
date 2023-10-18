@@ -1,26 +1,32 @@
-class Student:
-    def __init__(self, name, roll_number, cgpa):
-        self.name = name
-        self.roll_number = roll_number
-        self.cgpa = cgpa
+class BankAccount:
+    def __init__(self, account_number, account_holder_name, initial_balance=0.0):
+        self.__account_number = account_number
+        self.__account_holder_name = account_holder_name
+        self.__account_balance = initial_balance
 
-    def __str__(self):
-        return f"{self.name} (Roll Number: {self.roll_number}, CGPA: {self.cgpa})"
+    def deposit(self, amount):
+        if amount > 0:
+            self.__account_balance += amount
+            return f"Deposited ${amount}. New balance: ${self.__account_balance}"
+        else:
+            return "Invalid deposit amount. Amount must be greater than 0."
 
-def sort_students(student_list):
- 
-    sorted_students = sorted(student_list, key=lambda student: student.cgpa, reverse=True)
-    return sorted_students
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self.__account_balance:
+            self.__account_balance -= amount
+            return f"Withdrew ${amount}. New balance: ${self.__account_balance}"
+        else:
+            return "Invalid withdrawal amount or insufficient balance."
 
-students = [
-    Student("Alice", "A101", 3.8),
-    Student("Bob", "B102", 3.9),
-    Student("Charlie", "C103", 3.7),
-    Student("David", "D104", 3.95),
-    Student("Eve", "E105", 3.85),
-]
+    def display_balance(self):
+        return f"Account Balance for {self.__account_holder_name}: ${self.__account_balance}"
 
-sorted_students = sort_students(students)
 
-for student in sorted_students:
-    print(student)
+# Creating an instance of BankAccount
+account = BankAccount("1234567890", "John Doe", 1000.0)
+
+# Testing deposit and withdrawal functionality
+print(account.display_balance())
+print(account.deposit(500))
+print(account.withdraw(200))
+print(account.withdraw(1500))  # This should result in an error message
